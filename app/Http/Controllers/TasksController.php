@@ -16,13 +16,6 @@ class TasksController extends Controller
         ]);
     }
 
-
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
      
     public function create()
     {
@@ -32,13 +25,8 @@ class TasksController extends Controller
             'task' => $task,
         ]);
     }
-    
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
+
     public function store(Request $request)
  {
            $this->validate($request, [
@@ -46,21 +34,17 @@ class TasksController extends Controller
             'content' => 'required'
         ]);
         
-        $task = new Task;
-        $task->status = $request->status;   
-        $task->content = $request->content;
-        $task->save();
 
-        return redirect('/');
+             $request->user()->tasks()->create([
+            'content' => $request->content,
+            'status' => $request->status,
+        ]);
+
+        return back();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-     
+
+
     public function show($id)
     {
         $task = Task::find($id);
@@ -71,12 +55,7 @@ class TasksController extends Controller
     }
 
     
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
       $task = Task::find($id);
@@ -86,13 +65,6 @@ class TasksController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
         {
            $this->validate($request, [
@@ -108,17 +80,14 @@ class TasksController extends Controller
         return redirect('/');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $task = Task::find($id);
-        $task->delete();
+   public function destroy($id)
+   {
+        $task = \App\Task::find($id);
 
-        return redirect('/');
+        if (\Auth::id() === $task->user_id) {
+            $task->delete();
+        }
+
+        return back();
     }
 }
