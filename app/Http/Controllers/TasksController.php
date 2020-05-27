@@ -27,9 +27,9 @@ class TasksController extends Controller
     {
         $task = new Task;
 
-        return view('tasks.create', [
-            'task' => $task,
-        ]);
+        return redirect('/');
+        
+ 
     }
 
 
@@ -96,4 +96,5 @@ class TasksController extends Controller
 
         return redirect('/');
     }
+    
 }

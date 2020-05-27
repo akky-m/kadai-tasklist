@@ -14,19 +14,14 @@
 
 Route::resource('tasks', 'TasksController');
 
-/*
-Route::get('/', function () {
-    return view('welcome');
-});
-**/
 
 Route::get('/', 'TasksController@index');
 
-
+/*
 Route::group(['middleware' => 'auth'], function () {
-    Route::resource('users', 'UsersController', ['only' => ['index', 'show']]);
     Route::resource('tasks', 'TasksController', ['only' => ['store', 'destroy']]);
 });
+**/
 
 Route::get('signup', 'Auth\RegisterController@showRegistrationForm')->name('signup.get');
 Route::post('signup', 'Auth\RegisterController@register')->name('signup.post');
