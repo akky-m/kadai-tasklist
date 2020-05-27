@@ -7,7 +7,7 @@ use App\Task;
 
 class TasksController extends Controller
 {
-     public function index()
+    public function index()
     {
         $data = [];
         if (\Auth::check()) {
@@ -19,11 +19,10 @@ class TasksController extends Controller
                 'tasks' => $tasks,
             ];
         }
-        
         return view('welcome', $data);
     }
 
-     
+
     public function create()
     {
         $task = new Task;
