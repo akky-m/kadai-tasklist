@@ -10,7 +10,7 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         // 未ログインならreturn redirectを実行
-        if (!Auth::guard($guard)->check()) {
+        if (Auth::guard($guard)->check()) {
             return redirect('/');
         }
 

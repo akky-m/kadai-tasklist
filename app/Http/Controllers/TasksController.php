@@ -21,15 +21,17 @@ class TasksController extends Controller
         }
         
         return view('welcome', $data);
-    }
+      
+     }
 
 
     public function create()
     {
         $task = new Task;
 
-        return redirect('/');
-        
+        return view('tasks.create', [
+        'task' => $task,
+      ]);
  
     }
 
@@ -47,7 +49,7 @@ class TasksController extends Controller
             'status' => $request->status,
         ]);
 
-        return back();
+        return redirect('/');
     }
 
 
@@ -99,11 +101,4 @@ class TasksController extends Controller
     }
     
 }
-
-/*    
-    public function task()
-    {
-        return redirect('/');
-    }
-    **/
 
